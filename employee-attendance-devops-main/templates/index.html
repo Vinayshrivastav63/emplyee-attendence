@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendify | Employee Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="app-layout">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-icon">A</div>
+            <span>Attendify</span>
+        </div>
+
+        <p class="menu-label">MAIN MENU</p>
+
+        <a href="#" class="nav-link active">
+            <span>▦</span> Dashboard
+        </a>
+        <a href="#employees" class="nav-link">
+            <span>♙</span> Employees
+        </a>
+        <a href="#attendance" class="nav-link">
+            <span>▣</span> Attendance
+        </a>
+
+        <div class="sidebar-footer">
+            <div class="avatar">AD</div>
+            <div>
+                <strong>Administrator</strong>
+                <small>HR Manager</small>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1>Dashboard</h1>
+                <p>Welcome back! Here's your attendance overview.</p>
+            </div>
+            <div class="date-display" id="currentDate"></div>
+        </header>
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon purple">♙</div>
+                <p>Total Employees</p>
+                <h2 id="totalEmployees">0</h2>
+                <small>Registered employees</small>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon green">✓</div>
+                <p>Present Today</p>
+                <h2 id="presentCount">0</h2>
+                <small>Employees present</small>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon red">✕</div>
+                <p>Absent Today</p>
+                <h2 id="absentCount">0</h2>
+                <small>Employees absent</small>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon orange">%</div>
+                <p>Attendance Rate</p>
+                <h2 id="attendanceRate">0%</h2>
+                <small>Today's attendance</small>
+            </div>
+
+        </section>
+
+        <section class="content-grid">
+
+            <div class="panel" id="employees">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Add Employee</h2>
+                        <p>Register a new team member</p>
+                    </div>
+                    <span class="heading-icon">+</span>
+                </div>
+
+                <form id="employeeForm">
+                    <label>Employee Name</label>
+                    <input type="text" id="employeeName"
+                           placeholder="Enter full name" required>
+
+                    <label>Email Address</label>
+                    <input type="email" id="employeeEmail"
+                           placeholder="Enter email address" required>
+
+                    <label>Department</label>
+                    <input type="text" id="employeeDepartment"
+                           placeholder="e.g. Engineering" required>
+
+                    <button type="submit" class="primary-btn">
+                        + Add Employee
+                    </button>
+                </form>
+            </div>
+
+            <div class="panel" id="attendance">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Mark Attendance</h2>
+                        <p>Record daily employee attendance</p>
+                    </div>
+                    <span class="heading-icon">✓</span>
+                </div>
+
+                <form id="attendanceForm">
+                    <label>Select Employee</label>
+                    <select id="attendanceEmployee" required>
+                        <option value="">Choose employee</option>
+                    </select>
+
+                    <label>Attendance Date</label>
+                    <input type="date" id="attendanceDate" required>
+
+                    <label>Attendance Status</label>
+                    <select id="attendanceStatus" required>
+                        <option value="Present">Present</option>
+                        <option value="Absent">Absent</option>
+                    </select>
+
+                    <button type="submit" class="primary-btn">
+                        Save Attendance
+                    </button>
+                </form>
+            </div>
+
+        </section>
+
+        <section class="panel records-panel">
+            <div class="panel-heading">
+                <div>
+                    <h2>Attendance Records</h2>
+                    <p>Recent employee attendance activity</p>
+                </div>
+                <button class="refresh-btn" onclick="loadDashboard()">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Employee Name</th>
+                            <th>Department</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="attendanceTable">
+                        <tr>
+                            <td colspan="4" class="empty-state">
+                                Loading records...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div id="message" class="message"></div>
+
+        <footer>
+            Attendify Employee Management System | Built with Flask & PostgreSQL
+        </footer>
+
+    </main>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
